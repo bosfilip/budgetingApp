@@ -64,12 +64,34 @@ def expenseList(date1, date2):
     q = "SELECT * FROM spent WHERE date BETWEEN %s AND %s;"
     v = (date1, date2)
     mycursor.execute(q,v)
-    mydb.commit()
+    result = mycursor.fetchall()
+
+    for row in result:
+        print(row)
 def depositList():
+    mydb = mysql.connector.connect(
+        host="127.0.0.1",
+        user="root",
+        password="aJopek1608",
+        database="budgetdb"
+    )
+
+    mycursor = mydb.cursor()
+
+    q = "SELECT * FROM deposit WHERE date BETWEEN %s AND %s;"
+    v = (date1, date2)
+    mycursor.execute(q, v)
+    result = mycursor.fetchall()
+
+    for row in result:
+        print(row)
+
+def thisMonthE():
     pass
 
-def BackEngine():
+def thisMonthD():
     pass
+
 
 def user():
     print("Wellcome to budgeting app")
@@ -103,11 +125,16 @@ def user():
             date2 = periodD[1].strip()
             expenseList(date1, date2)
         elif wh1 == "d":
-            depositList()
+            periodD = input("Input the desired date range for viewing your expense history\n"
+                            "ex. YYYY-MM-DD to YYYY-MM-DD\n"
+                            "Input: ")
+            periodD = periodD.split(" to ")
+            date1 = periodD[0].strip()
+            date2 = periodD[1].strip()
+            depositList(date1, date2)
 
-        dbEngine()
     elif w1 == "m":
-        dbEngine()
+
 
 user()
 
