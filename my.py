@@ -86,11 +86,38 @@ def depositList():
     for row in result:
         print(row)
 
-def thisMonthE():
-    pass
+def monthE():
+    mydb = mysql.connector.connect(
+        host="127.0.0.1",
+        user="root",
+        password="aJopek1608",
+        database="budgetdb"
+    )
 
-def thisMonthD():
-    pass
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT * FROM spent WHERE YEAR(date) = YEAR(CURDATE()) AND MONTH(date) = MONTH(CURDATE());")
+
+    result = mycursor.fetchall()
+
+    for row in result:
+        print(row)
+def monthD():
+    mydb = mysql.connector.connect(
+        host="127.0.0.1",
+        user="root",
+        password="aJopek1608",
+        database="budgetdb"
+    )
+
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT * FROM deposit WHERE YEAR(date) = YEAR(CURDATE()) AND MONTH(date) = MONTH(CURDATE());")
+
+    result = mycursor.fetchall()
+
+    for row in result:
+        print(row)
 
 
 def user():
@@ -134,9 +161,22 @@ def user():
             depositList(date1, date2)
 
     elif w1 == "m":
-
+        w = input("Do you want to check expenses or deposits for the current month?\n"
+                  "For expenses enter 'e'\n"
+                  "For deposits enter 'd'\n"
+                  "Input: ")
+        if w == "e":
+            monthE()
+        elif w == "d":
+            monthD()
 
 user()
+
+#To-Dos
+# added expense and deposit for current month functions
+# try except for each function but not for user
+# try except for user
+# closing for mycursor and my.db
 
 
 
